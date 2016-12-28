@@ -15,6 +15,20 @@ struct node *build123c();
 
 int minValue(struct node *node);
 
+void printTree(struct node *node);
+
+void printPostorder(struct node *node);
+
+int hasPathSum(struct node *node, int sum);
+
+void printPathsRecur(struct node *node, int path[], int pathLen);
+
+void mirror(struct node *node);
+
+void doubleTree(struct node *node);
+
+int sameTree(struct node *a, struct node *b);
+
 struct node {
     int data;
     struct node *left;
@@ -176,31 +190,34 @@ int hasPathSum(struct node *node, int sum) {
     }
 }
 
-void printArray(int *a, int len){
-    for(int i = 0; i< len; i++){
+void printArray(int *a, int len) {
+    for (int i = 0; i < len; i++) {
         printf("%d ", a[i]);
     }
     printf("\n");
 }
-void printPathsRecur(struct node * node, int path[], int pathLen){
-    if(node == NULL) return;
+
+void printPathsRecur(struct node *node, int path[], int pathLen) {
+    if (node == NULL) return;
 
     path[pathLen] = node->data;
     pathLen++;
 
-    if(node->left == NULL && node->right == NULL){
+    if (node->left == NULL && node->right == NULL) {
         printArray(path, pathLen);
-    }else{
+    } else {
         // otherwise try both subtrees
         printPathsRecur(node->left, path, pathLen);
         printPathsRecur(node->right, path, pathLen);
     }
 }
-void printPaths(struct node * node){
+
+void printPaths(struct node *node) {
     int path[1000];
 
     printPathsRecur(node, path, 0);
 }
+
 /*
  Change a tree so that the roles of the
  left and right pointers are swapped at every node.
@@ -219,10 +236,10 @@ void printPaths(struct node * node){
         / \
        3   1
 */
-void mirror(struct node * node){
-    if(node == NULL) return;
-    else{
-        struct node * tmp;
+void mirror(struct node *node) {
+    if (node == NULL) return;
+    else {
+        struct node *tmp;
 
         // do the subtrees
         mirror(node->left);
@@ -234,6 +251,7 @@ void mirror(struct node * node){
         node->right = tmp;
     }
 }
+
 /*
 10. doubleTree() Solution (C/C++)
 
@@ -257,7 +275,7 @@ Is changed to...
 1
 
 */
-void doubleTree(struct node *node){
+void doubleTree(struct node *node) {
     struct node *oldLeft;
     if (node == NULL) return;
 
@@ -267,23 +285,25 @@ void doubleTree(struct node *node){
 
     //duplicate this node to its left
     oldLeft = node->left;
-    node->left = newNode( node->data);
+    node->left = newNode(node->data);
     node->left->left = oldLeft;
 }
+
 /*
  Given two trees, return true if they are
  structurally identical.
 */
-int sameTree(struct node* a, struct node* b) {
+int sameTree(struct node *a, struct node *b) {
     // 1. both empty -> true
-    if(a == NULL && b == NULL) return true;
-    // 2. both non-empty -> compare them
-    else if(a != NULL && b!= NULL){
+    if (a == NULL && b == NULL) return true;
+        // 2. both non-empty -> compare them
+    else if (a != NULL && b != NULL) {
         return (a->data == b->data && sameTree(a->left, b->left) && sameTree(a->right, b->right));
     }
-    // 3. one empty, one not -> false
+        // 3. one empty, one not -> false
     else return false;
 }
+
 int main() {
     struct node *root = build123b();
 
@@ -291,7 +311,7 @@ int main() {
 
     printPostorder(root);
 
-    printf("\n%d\n",hasPathSum(root, 6));
+    printf("\n%d\n", hasPathSum(root, 6));
 
     printPaths(root);
 
