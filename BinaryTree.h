@@ -21,7 +21,7 @@ struct node *build123c();
 
 int minValue(struct node *node);
 
-void printTree(struct node *node);
+void printPreorder(struct node *node);
 
 void printPostorder(struct node *node);
 
@@ -158,12 +158,12 @@ int minValue(struct node *node) {
  its data elements in increasing
  sorted order.
 */
-void printTree(struct node *node) {
+void printPreorder(struct node *node) {
     if (node == NULL) return;
 
-    printTree(node->left);
+    printPreorder(node->left);
     printf("%d ", node->data);
-    printTree(node->right);
+    printPreorder(node->right);
 }
 
 /*
@@ -174,8 +174,8 @@ void printTree(struct node *node) {
 void printPostorder(struct node *node) {
     if (node == NULL) return;
 
-    printTree(node->left);
-    printTree(node->right);
+    printPreorder(node->left);
+    printPreorder(node->right);
     printf("%d ", node->data);
 }
 
