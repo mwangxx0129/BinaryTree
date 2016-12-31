@@ -4,6 +4,7 @@
 
 #ifndef BINARYTREE_BINARYTREE_H
 #define BINARYTREE_BINARYTREE_H
+
 #include <iostream>
 
 /*----------subroutine declaration---------*/
@@ -188,12 +189,9 @@ void printPostorder(struct node *node) {
  and check to see if the sum is 0 when you run out of tree.
 */
 int hasPathSum(struct node *node, int sum) {
-    if (node == NULL) {
-        return (sum == 0);
-    } else { // otherwise check both subtrees
-        int subSum = sum - node->data;
-        return hasPathSum(node->left, subSum) || hasPathSum(node->right, subSum);
-    }
+    if (node == NULL) return false;
+    if (node->left == NULL && node->right == NULL) return node->data == sum;
+    return hasPathSum(node->left, sum - node->data) || hasPathSum(node->right, sum - node->data);
 }
 
 void printArray(int *a, int len) {
@@ -325,4 +323,5 @@ void Drive() {
     doubleTree(root);
     printPaths(root);
 }
+
 #endif //BINARYTREE_BINARYTREE_H

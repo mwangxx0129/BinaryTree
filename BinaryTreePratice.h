@@ -24,11 +24,11 @@ void printPostorder(struct node *node);
 
 int minValue(struct node *node);
 
-int hasPathSum(struct node *node, int sum);
-
 void printPathsRecur(struct node *node, int path[], int pathLen);
 
 void mirror(struct node *node);
+
+int hasPathSum(struct node *node, int sum);
 
 void doubleTree(struct node *node);
 
@@ -153,7 +153,14 @@ int minValue(struct node *node){
     }
     return current->data;
 }
+int hasPathSum(struct node *node, int sum){
+    if(node == NULL) return false;
+    if(node->left == NULL && node->right == NULL)
+        return sum == node->data;
+    int subSum = sum-node->data;
+    return hasPathSum(node->left, subSum) || hasPathSum(node->right, subSum);
 
+}
 void DriveTest() {
     struct node *root = build123();
     int path[1000];
